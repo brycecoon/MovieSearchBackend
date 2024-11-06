@@ -29,7 +29,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapHealthChecks("/healthy");
+app.MapHealthChecks("/api/healthy");
 
 app.UseAuthorization();
 
