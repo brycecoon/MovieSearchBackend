@@ -3,9 +3,7 @@ WORKDIR /App
 
 # Copy everything
 COPY . ./
-# Restore as distinct layers
 RUN dotnet restore MovieSearchBackend.csproj
-# Build and publish a release
 RUN dotnet publish MovieSearchBackend.csproj -c Release -o out
 
 # Build runtime image
