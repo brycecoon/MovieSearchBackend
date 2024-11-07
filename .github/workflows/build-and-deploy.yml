@@ -18,9 +18,9 @@ jobs:
 
       - name: Create DatabaseSecret
         env:
-           DATABASE_URL: ${{ secrets.DB_CONNECTION_STRING }}
-         run: |
-           kubectl create secret generic db-credentials --from-literal=db="$DATABASE_URL" --dry-run=client -o yaml | kubectl apply -f -
+          DATABASE_URL: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          kubectl create secret generic db-credentials --from-literal=db="$DATABASE_URL" --dry-run=client -o yaml | kubectl apply -f -
         
 
       - name: Build image
