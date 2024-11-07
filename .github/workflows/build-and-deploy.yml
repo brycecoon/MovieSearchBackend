@@ -16,6 +16,14 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
+      - name: Create DatabaseSecret
+        env:
+          DATABASE_URL: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          kubectl create secret generic db-credentials \
+            --from-literal=db=$DATABASE_URL \
+            --dry-run=client -o yaml | kubectl apply -f -
+
       - name: Build image
         run: |
           docker build -t brycecoon/msearchbackend:${{ github.run_number }} \
