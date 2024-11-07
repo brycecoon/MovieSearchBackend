@@ -22,7 +22,12 @@ jobs:
         run: |
           kubectl create secret generic db-credentials --from-literal=db="$DATABASE_URL" --dry-run=client -o yaml | kubectl apply -f -
         
-
+      # Wait and verify that the secret is created successfully
+      - name: Verify DatabaseSecret creation
+        run: |
+          kubectl get secret db-credentials
+          kubectl wait --for=condition=available --timeout=30s secret/db-credentials || echo "Secret not yet available"
+          
       - name: Build image
         run: |
           docker build -t brycecoon/msearchbackend:${{ github.run_number }} \
