@@ -2,8 +2,8 @@
 
 public class UserDTO
 {
-    public required string name;
-    public string? email;
-    public string? biography;
-    public int roleId;
+    public required string name { get; set; }
+    public string? email { get; set; }
+    public string? biography { get; set; }
+    public int roleId { get; set; }
 }

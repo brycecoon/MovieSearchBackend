@@ -2,6 +2,6 @@
 
 public class ListDTO
 {
-    public required string name;
-    public required int userId;
+    public required string name { get; set; }
+    public required int userId { get; set; }
 }

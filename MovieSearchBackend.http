@@ -22,7 +22,7 @@ Content-Type: application/json
   "name": "Hello",
   "email": "there@example.com",
   "biography": "friend",
-  "roleId": 2
+  "roleId": 1
 }
 
 ###

@@ -79,7 +79,9 @@ public partial class PostgresContext : DbContext
 
             entity.ToTable("user", "MovieSearch");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+            .ValueGeneratedOnAdd()
+            .HasColumnName("id");
             entity.Property(e => e.Biography)
                 .HasMaxLength(200)
                 .HasColumnName("biography");

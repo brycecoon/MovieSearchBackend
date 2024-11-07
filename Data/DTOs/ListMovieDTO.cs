@@ -2,6 +2,6 @@
 
 public class ListMovieDTO
 {
-    public required int listId;
-    public required int movieId;
+    public required int listId { get; set; }
+    public required int movieId { get; set; }
 }

@@ -23,6 +23,7 @@ public class UserService : IUserService
             Biography = user.biography,
             RoleId = user.roleId,
         };
+        Console.WriteLine(user);
         _context.Users.Add(newUser);
         await _context.SaveChangesAsync();
     }
