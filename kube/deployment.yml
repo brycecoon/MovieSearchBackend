@@ -23,7 +23,7 @@ spec:
         image: brycecoon/msearchbackend:${IMAGE_TAG}
         env:
           - name: db
-            value: "${db}"
+            value: "${DB}"
         ports:
         - containerPort: 8080
         readinessProbe:
