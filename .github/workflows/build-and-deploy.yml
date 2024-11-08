@@ -16,18 +16,6 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
-      - name: Create DatabaseSecret
-        env:
-          DATABASE_URL: ${{ secrets.DB_CONNECTION_STRING }}
-        run: |
-          kubectl create secret generic db-credentials --from-literal=db="$DATABASE_URL" --dry-run=client -o yaml | kubectl apply -f -
-        
-      # Wait and verify that the secret is created successfully
-      - name: Verify DatabaseSecret creation
-        run: |
-          kubectl get secret db-credentials
-          kubectl wait --for=condition=available --timeout=30s secret/db-credentials || echo "Secret not yet available"
-          
       - name: Build image
         run: |
           docker build -t brycecoon/msearchbackend:${{ github.run_number }} \
@@ -41,7 +29,7 @@ jobs:
       - name: Deploy to Kubernetes
         run: |
           export PATH=$PATH:~/.nix-profile/bin:/nix/var/nix/profiles/default/bin
-
+          export db=${{ secrets.DB_CONNECTION_STRING }}
           export IMAGE_TAG=${{ github.run_number }}
 
           for file in kube/*; do 
