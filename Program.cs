@@ -4,6 +4,7 @@ using MovieSearchBackend.Data.Interfaces;
 using MovieSearchBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHttpClient();
 
 // Add services to the container.
 builder.Services.AddHealthChecks();
@@ -18,7 +19,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IListService, ListService>();
 builder.Services.AddScoped<IList_MovieService, List_MovieService>();
-
+string? apikey = builder.Configuration["apikey"];
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
