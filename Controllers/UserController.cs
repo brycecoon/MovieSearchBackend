@@ -2,6 +2,8 @@
 using MovieSearchBackend.Data.Interfaces;
 using MovieSearchBackend.Data;
 using MovieSearchBackend.Data.DTOs;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace MovieSearchBackend.Controllers;
 [ApiController]
@@ -12,6 +14,13 @@ public class UserController : ControllerBase
     public UserController(IUserService service)
     {
         _UserService = service;
+    }
+
+    [HttpGet("testAuthorize")]
+    public async Task<string> testAuthorize()
+    {
+        var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
+        return email ?? "Email not found";
     }
 
     [HttpGet("getAll")]

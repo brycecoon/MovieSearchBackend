@@ -1,9 +1,25 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MovieSearchBackend.Data;
 using MovieSearchBackend.Data.Interfaces;
 using MovieSearchBackend.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidIssuer = "https://auth.snowse.duckdns.org/realms/advanced-frontend",
+            ValidAudience = "bryce-oAuth2",
+        };
+        options.Authority = "https://auth.snowse.duckdns.org/realms/advanced-frontend";
+    });
+
 builder.Services.AddHttpClient();
 
 // Add services to the container.
@@ -28,6 +44,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(p =>
+p.AllowAnyHeader()
+.AllowAnyMethod()
+.AllowAnyOrigin());
 
 app.UseHttpsRedirection();
 app.MapHealthChecks("/api/healthy");
