@@ -28,6 +28,11 @@ public class UserService : IUserService
         await _context.SaveChangesAsync();
     }
 
+    public async Task<User> getUserByEmail(string email)
+    {
+        return await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
+    }
+
     public async Task<List<User>> GetUserListAsync()
     {
         return await _context.Users.ToListAsync();

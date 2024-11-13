@@ -55,6 +55,7 @@ app.MapHealthChecks("/api/healthy");
 
 app.UseAuthorization();
 
+
 app.MapControllers();
 
 app.Run();

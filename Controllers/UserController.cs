@@ -29,6 +29,12 @@ public class UserController : ControllerBase
         return await _UserService.GetUserListAsync();
     }
 
+    [HttpGet("getByEmail")]
+    public async Task<User> GetUserByEmailAsync(string email)
+    {
+        return await _UserService.getUserByEmail(email);
+    }
+
     [HttpPut("edit")]
     public async Task UpdateUserListAsync([FromBody] User User)
     {

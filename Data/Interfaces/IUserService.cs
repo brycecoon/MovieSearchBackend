@@ -7,4 +7,5 @@ public interface IUserService
     public Task<List<User>> GetUserListAsync();
     public Task CreateUser(UserDTO user);
     public Task UpdateUser(User user);
+    public Task<User> getUserByEmail(string email);
 }
