@@ -31,6 +31,7 @@ jobs:
           export PATH=$PATH:~/.nix-profile/bin:/nix/var/nix/profiles/default/bin
           export IMAGE_TAG=${{ github.run_number }}
           export DB="${{ secrets.DB_CONNECTION_STRING }}"
+          export apikey="${{ secrets.API_KEY }}"
 
           for file in kube/*; do 
               cat "$file" | envsubst | kubectl apply -f -; 
