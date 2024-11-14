@@ -35,7 +35,7 @@ builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IListService, ListService>();
 builder.Services.AddScoped<IList_MovieService, List_MovieService>();
-string? apikey = builder.Configuration["apikey"];
+string? apikey = builder.Configuration["APIKEY"];
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
