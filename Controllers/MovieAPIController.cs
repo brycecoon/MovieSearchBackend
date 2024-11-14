@@ -57,4 +57,21 @@ public class MovieAPIController : ControllerBase
         }
         else { return null; }
     }
+
+    [HttpGet("getMoviesByPage")]
+    public async Task<MovieDetails[]> GetMoviesbyPage(int pageNum)
+    {
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/now_playing?api_key={_apiKey}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page={pageNum}&primary_release_date.gte=1980&vote_count.gte=100&vote_average.gte=5.5&with_watch_monetization_types=flatrate");
+        if (response.IsSuccessStatusCode)
+        {
+            using var contentStream =
+                await response.Content.ReadAsStreamAsync();
+
+            var nowPlayingResponse = await JsonSerializer.DeserializeAsync
+                <NowPlayingResponse>(contentStream);
+
+            return nowPlayingResponse?.Results.ToArray();
+        }
+        else { return null; }
+    }
 }
