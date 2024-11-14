@@ -2,6 +2,8 @@
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using System.Text.Json.Serialization;
+using MovieSearchBackend.Data.JSONResponses;
 namespace MovieSearchBackend.Controllers;
 
 [ApiController]
@@ -50,10 +52,10 @@ public class MovieAPIController : ControllerBase
             using var contentStream =
                 await response.Content.ReadAsStreamAsync();
 
-            var nowPlayingResponse = await JsonSerializer.DeserializeAsync
+            var trendingMovesResponse = await JsonSerializer.DeserializeAsync
                 <NowPlayingResponse>(contentStream);
 
-            return nowPlayingResponse?.Results.ToArray();
+            return trendingMovesResponse?.Results.ToArray();
         }
         else { return null; }
     }
@@ -67,11 +69,47 @@ public class MovieAPIController : ControllerBase
             using var contentStream =
                 await response.Content.ReadAsStreamAsync();
 
-            var nowPlayingResponse = await JsonSerializer.DeserializeAsync
+            var moviesByPageResponse = await JsonSerializer.DeserializeAsync
                 <NowPlayingResponse>(contentStream);
 
-            return nowPlayingResponse?.Results.ToArray();
+            return moviesByPageResponse?.Results.ToArray();
         }
         else { return null; }
+    }
+
+    [HttpGet("getPageOfMoviesByGenre")]
+    public async Task<MovieDetails[]> GetPageOfMoviesByGenre(int genreId, int pageNum)
+    {
+        var response = await _httpClient.GetAsync($"{genreUrl}{genreId}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page={pageNum}&primary_release_date.gte=1980&vote_count.gte=5&vote_average.gte=3&with_watch_monetization_types=flatrate");
+        if (response.IsSuccessStatusCode)
+        {
+            using var contentStream =
+                await response.Content.ReadAsStreamAsync();
+
+            var moviesByPageResponse = await JsonSerializer.DeserializeAsync
+                <NowPlayingResponse>(contentStream);
+
+            return moviesByPageResponse?.Results.ToArray();
+        }
+        else { return null; }
+    }
+
+    [HttpGet("generateGenres")]
+    public async Task<ActionResult<List<Genre>>> GenerateGenres()
+    {
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/genre/movie/list?api_key={_apiKey}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            using var contentStream = await response.Content.ReadAsStreamAsync();
+
+            var genreResponse = await JsonSerializer.DeserializeAsync<GenreResponse>(contentStream);
+
+            return genreResponse?.Genres ?? new List<Genre>();
+        }
+        else
+        {
+            return StatusCode((int)response.StatusCode, "Error fetching genres.");
+        }
     }
 }
