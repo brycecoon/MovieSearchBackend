@@ -24,6 +24,9 @@ spec:
         env:
           - name: db
             value: "${DB}"
+        env:
+          - name: APIKEY
+            value: "${APIKEY}"
         ports:
         - containerPort: 8080
         readinessProbe:

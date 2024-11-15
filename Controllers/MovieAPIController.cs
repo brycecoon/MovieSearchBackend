@@ -94,6 +94,35 @@ public class MovieAPIController : ControllerBase
         else { return null; }
     }
 
+    //[HttpGet("getSingleMovieDetails/{movieId}")]
+    //public async Task<ActionResult<SingleMovieDetails>> GetSingleMovieDetails(int movieId)
+    //{
+    //    var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/{movieId}?api_key={_apiKey}");
+
+    //    if (response.IsSuccessStatusCode)
+    //    {
+    //        using var contentStream = await response.Content.ReadAsStreamAsync();
+
+    //        var options = new JsonSerializerOptions
+    //        {
+    //            PropertyNameCaseInsensitive = true,
+    //            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    //        };
+
+    //        var singleMovieDetails = await JsonSerializer.DeserializeAsync<SingleMovieDetails>(contentStream, options);
+
+    //        if (singleMovieDetails != null)
+    //        {
+    //            return Ok(singleMovieDetails); // Return the movie details
+    //        }
+
+    //        return NotFound("Movie details not found."); // In case deserialization fails
+    //    }
+
+    //    return StatusCode((int)response.StatusCode, $"Error fetching movie details: {response.ReasonPhrase}");
+    //}
+
+
     [HttpGet("generateGenres")]
     public async Task<ActionResult<List<Genre>>> GenerateGenres()
     {
@@ -103,13 +132,23 @@ public class MovieAPIController : ControllerBase
         {
             using var contentStream = await response.Content.ReadAsStreamAsync();
 
-            var genreResponse = await JsonSerializer.DeserializeAsync<GenreResponse>(contentStream);
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
 
-            return genreResponse?.Genres ?? new List<Genre>();
+            var genreResponse = await JsonSerializer.DeserializeAsync<GenreResponse>(contentStream, options);
+
+            if (genreResponse?.Genres != null)
+            {
+                return Ok(genreResponse.Genres);
+            }
+
+            return NotFound("No genres found in the response.");
         }
-        else
-        {
-            return StatusCode((int)response.StatusCode, "Error fetching genres.");
-        }
+
+        return StatusCode((int)response.StatusCode,
+            $"Error fetching genres: {response.ReasonPhrase}");
     }
 }
