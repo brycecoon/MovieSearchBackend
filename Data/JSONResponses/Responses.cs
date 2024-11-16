@@ -5,13 +5,13 @@ namespace MovieSearchBackend.Data.JSONResponses;
 public class NowPlayingResponse
 {
     [JsonPropertyName("results")]
-    public List<MovieDetails> Results { get; set; }
+    public List<MovieDetails>? Results { get; set; }
 }
 
 public class GenreResponse
 {
     [JsonPropertyName("genres")]
-    public List<Genre> Genres { get; set; }
+    public List<Genre>? Genres { get; set; }
 }
 
 

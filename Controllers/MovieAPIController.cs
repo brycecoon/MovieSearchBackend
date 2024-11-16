@@ -29,7 +29,7 @@ public class MovieAPIController : ControllerBase
     [HttpGet("getNowPlaying")]
     public async Task<MovieDetails[]> GetNowPlayingMovies()
     {
-        var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/now_playing?api_key={_apiKey}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&primary_release_date.gte=1980&vote_count.gte=100&vote_average.gte=5.5&with_watch_monetization_types=flatrate");
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/now_playing?api_key={_apiKey}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&");
         if (response.IsSuccessStatusCode)
         {
             using var contentStream =
@@ -46,7 +46,7 @@ public class MovieAPIController : ControllerBase
     [HttpGet("getTrendingMovies")]
     public async Task<MovieDetails[]> GetTrendingMovies()
     {
-        var response = await _httpClient.GetAsync($"{apiBaseURL}/trending/all/day?api_key={_apiKey}&sort_by=popularity.desc&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&primary_release_date.gte=1980&vote_count.gte=100&vote_average.gte=5.5&with_watch_monetization_types=flatrate");
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/trending/all/day?api_key={_apiKey}&sort_by=popularity.desc&language=en-US&sort_by=vote_average.desc&include_adult=false");
         if (response.IsSuccessStatusCode)
         {
             using var contentStream =
@@ -94,33 +94,50 @@ public class MovieAPIController : ControllerBase
         else { return null; }
     }
 
-    //[HttpGet("getSingleMovieDetails/{movieId}")]
-    //public async Task<ActionResult<SingleMovieDetails>> GetSingleMovieDetails(int movieId)
-    //{
-    //    var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/{movieId}?api_key={_apiKey}");
+    [HttpGet("searchMovies")]
+    public async Task<MovieDetails[]> SearchMovies (string movieToSearch, int pageNum)
+    {
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/search/movie?api_key={_apiKey}&query={movieToSearch}&include_adult=false&language=en-US&page={pageNum}");
+        if (response.IsSuccessStatusCode)
+        {
+            using var contentStream =
+                await response.Content.ReadAsStreamAsync();
 
-    //    if (response.IsSuccessStatusCode)
-    //    {
-    //        using var contentStream = await response.Content.ReadAsStreamAsync();
+            var moviesByPageResponse = await JsonSerializer.DeserializeAsync
+                <NowPlayingResponse>(contentStream);
 
-    //        var options = new JsonSerializerOptions
-    //        {
-    //            PropertyNameCaseInsensitive = true,
-    //            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-    //        };
+            return moviesByPageResponse?.Results.ToArray();
+        }
+        else { return null; }
+    }
 
-    //        var singleMovieDetails = await JsonSerializer.DeserializeAsync<SingleMovieDetails>(contentStream, options);
+    [HttpGet("getSingleMovieDetails")]
+    public async Task<ActionResult<SingleMovieDetails>> GetSingleMovieDetails(int movieId)
+    {
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/{movieId}?api_key={_apiKey}");
 
-    //        if (singleMovieDetails != null)
-    //        {
-    //            return Ok(singleMovieDetails); // Return the movie details
-    //        }
+        if (response.IsSuccessStatusCode)
+        {
+            using var contentStream = await response.Content.ReadAsStreamAsync();
 
-    //        return NotFound("Movie details not found."); // In case deserialization fails
-    //    }
+            var options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            };
 
-    //    return StatusCode((int)response.StatusCode, $"Error fetching movie details: {response.ReasonPhrase}");
-    //}
+            var singleMovieDetails = await JsonSerializer.DeserializeAsync<SingleMovieDetails>(contentStream, options);
+
+            if (singleMovieDetails != null)
+            {
+                return Ok(singleMovieDetails); // Return the movie details
+            }
+
+            return NotFound("Movie details not found."); // In case deserialization fails
+        }
+
+        return StatusCode((int)response.StatusCode, $"Error fetching movie details: {response.ReasonPhrase}");
+    }
 
 
     [HttpGet("generateGenres")]

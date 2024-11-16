@@ -9,7 +9,7 @@ public class SingleMovieDetails
     public bool Adult { get; set; }
 
     [JsonPropertyName("backdrop_path")]
-    public string BackdropPath { get; set; }
+    public string? BackdropPath { get; set; }
 
     [JsonPropertyName("belongs_to_collection")]
     public BelongsToCollection BelongsToCollection { get; set; }
@@ -21,31 +21,31 @@ public class SingleMovieDetails
     public List<Genre> Genres { get; set; }
 
     [JsonPropertyName("homepage")]
-    public string Homepage { get; set; }
+    public string? Homepage { get; set; }
 
     [JsonPropertyName("id")]
     public int Id { get; set; }
 
     [JsonPropertyName("imdb_id")]
-    public string ImdbId { get; set; }
+    public string? ImdbId { get; set; }
 
     [JsonPropertyName("origin_country")]
     public List<string> OriginCountry { get; set; }
 
     [JsonPropertyName("original_language")]
-    public string OriginalLanguage { get; set; }
+    public string? OriginalLanguage { get; set; }
 
     [JsonPropertyName("original_title")]
-    public string OriginalTitle { get; set; }
+    public string? OriginalTitle { get; set; }
 
     [JsonPropertyName("overview")]
-    public string Overview { get; set; }
+    public string? Overview { get; set; }
 
     [JsonPropertyName("popularity")]
     public double Popularity { get; set; }
 
     [JsonPropertyName("poster_path")]
-    public string PosterPath { get; set; }
+    public string? PosterPath { get; set; }
 
     [JsonPropertyName("production_companies")]
     public List<ProductionCompany> ProductionCompanies { get; set; }
@@ -54,7 +54,7 @@ public class SingleMovieDetails
     public List<ProductionCountry> ProductionCountries { get; set; }
 
     [JsonPropertyName("release_date")]
-    public string ReleaseDate { get; set; }
+    public string? ReleaseDate { get; set; }
 
     [JsonPropertyName("revenue")]
     public long Revenue { get; set; }
@@ -66,13 +66,13 @@ public class SingleMovieDetails
     public List<SpokenLanguage> SpokenLanguages { get; set; }
 
     [JsonPropertyName("status")]
-    public string Status { get; set; }
+    public string? Status { get; set; }
 
     [JsonPropertyName("tagline")]
-    public string Tagline { get; set; }
+    public string? Tagline { get; set; }
 
     [JsonPropertyName("title")]
-    public string Title { get; set; }
+    public string? Title { get; set; }
 
     [JsonPropertyName("video")]
     public bool Video { get; set; }
@@ -90,13 +90,13 @@ public class BelongsToCollection
     public int Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [JsonPropertyName("poster_path")]
-    public string PosterPath { get; set; }
+    public string? PosterPath { get; set; }
 
     [JsonPropertyName("backdrop_path")]
-    public string BackdropPath { get; set; }
+    public string? BackdropPath { get; set; }
 }
 
 public class Genre
@@ -105,7 +105,7 @@ public class Genre
     public int Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
 
 public class ProductionCompany
@@ -114,33 +114,33 @@ public class ProductionCompany
     public int Id { get; set; }
 
     [JsonPropertyName("logo_path")]
-    public string LogoPath { get; set; }
+    public string? LogoPath { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     [JsonPropertyName("origin_country")]
-    public string OriginCountry { get; set; }
+    public string? OriginCountry { get; set; }
 }
 
 public class ProductionCountry
 {
     [JsonPropertyName("iso_3166_1")]
-    public string Iso3166_1 { get; set; }
+    public string? Iso3166_1 { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
 
 public class SpokenLanguage
 {
     [JsonPropertyName("english_name")]
-    public string EnglishName { get; set; }
+    public string? EnglishName { get; set; }
 
     [JsonPropertyName("iso_639_1")]
-    public string Iso639_1 { get; set; }
+    public string? Iso639_1 { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 }
 
