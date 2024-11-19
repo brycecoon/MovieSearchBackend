@@ -2,6 +2,7 @@
 using MovieSearchBackend.Data.Interfaces;
 using MovieSearchBackend.Data;
 using MovieSearchBackend.Data.DTOs;
+using MovieSearchBackend.Services;
 
 namespace MovieSearchBackend.Controllers;
 [ApiController]
@@ -9,9 +10,11 @@ namespace MovieSearchBackend.Controllers;
 public class ListController : Controller
 {
     private readonly IListService _ListService;
-    public ListController(IListService service)
+    private readonly IList_MovieService _ListMovieService;
+    public ListController(IListService service, IList_MovieService listMovieService)
     {
         _ListService = service;
+        _ListMovieService = listMovieService;   
     }
 
     [HttpGet("getAll")]
@@ -37,9 +40,15 @@ public class ListController : Controller
         await _ListService.UpdateListAsync(list);
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
     public async Task DeleteListAsync(int id)
     {
+        var list =  await _ListMovieService.GetListMoviesByListIdAsync(id);
+        foreach (var listItem in list)
+        {
+            await _ListMovieService.DeleteFromListAsync(listItem.Id);
+        }
+
         await _ListService.DeleteListAsync(id);
     }
 }

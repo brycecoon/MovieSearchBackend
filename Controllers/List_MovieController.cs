@@ -6,10 +6,10 @@ using MovieSearchBackend.Data.DTOs;
 namespace MovieSearchBackend.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public class List_MovieController : Controller
+public class ListMovieController : Controller
 {
     private readonly IList_MovieService _ListMovieService;
-    public List_MovieController(IList_MovieService service)
+    public ListMovieController(IList_MovieService service)
     {
         _ListMovieService = service;
     }
@@ -31,8 +31,8 @@ public class List_MovieController : Controller
         await _ListMovieService.AddToListAsync(newListMovie);
     }
 
-    [HttpDelete]
-    public async Task DeleteListMovieListAsync(int id)
+    [HttpDelete("{id}")]
+    public async Task DeleteListMovieAsync(int id)
     {
         await _ListMovieService.DeleteFromListAsync(id);
     }

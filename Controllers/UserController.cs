@@ -17,7 +17,7 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("testAuthorize")]
-    public async Task<string> testAuthorize()
+    public string testAuthorize()
     {
         var email = HttpContext.User.FindFirst(ClaimTypes.Email)?.Value;
         return email ?? "Email not found";

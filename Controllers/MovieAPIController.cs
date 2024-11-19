@@ -44,7 +44,7 @@ public class MovieAPIController : ControllerBase
     }
 
     [HttpGet("getTrendingMovies")]
-    public async Task<MovieDetails[]> GetTrendingMovies()
+    public async Task<MovieDetails[]?> GetTrendingMovies()
     {
         var response = await _httpClient.GetAsync($"{apiBaseURL}/trending/all/day?api_key={_apiKey}&sort_by=popularity.desc&language=en-US&sort_by=vote_average.desc&include_adult=false");
         if (response.IsSuccessStatusCode)
@@ -61,7 +61,7 @@ public class MovieAPIController : ControllerBase
     }
 
     [HttpGet("getMoviesByPage")]
-    public async Task<MovieDetails[]> GetMoviesbyPage(int pageNum)
+    public async Task<MovieDetails[]?> GetMoviesbyPage(int pageNum)
     {
         var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/now_playing?api_key={_apiKey}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page={pageNum}&primary_release_date.gte=1980&vote_count.gte=100&vote_average.gte=5.5&with_watch_monetization_types=flatrate");
         if (response.IsSuccessStatusCode)
@@ -78,7 +78,7 @@ public class MovieAPIController : ControllerBase
     }
 
     [HttpGet("getPageOfMoviesByGenre")]
-    public async Task<MovieDetails[]> GetPageOfMoviesByGenre(int genreId, int pageNum)
+    public async Task<MovieDetails[]?> GetPageOfMoviesByGenre(int genreId, int pageNum)
     {
         var response = await _httpClient.GetAsync($"{genreUrl}{genreId}&language=en-US&sort_by=vote_average.desc&include_adult=false&include_video=false&page={pageNum}&primary_release_date.gte=1980&vote_count.gte=5&vote_average.gte=3&with_watch_monetization_types=flatrate");
         if (response.IsSuccessStatusCode)
@@ -95,7 +95,7 @@ public class MovieAPIController : ControllerBase
     }
 
     [HttpGet("searchMovies")]
-    public async Task<MovieDetails[]> SearchMovies (string movieToSearch, int pageNum)
+    public async Task<MovieDetails[]?> SearchMovies (string movieToSearch, int pageNum)
     {
         var response = await _httpClient.GetAsync($"{apiBaseURL}/search/movie?api_key={_apiKey}&query={movieToSearch}&include_adult=false&language=en-US&page={pageNum}");
         if (response.IsSuccessStatusCode)
@@ -130,10 +130,10 @@ public class MovieAPIController : ControllerBase
 
             if (singleMovieDetails != null)
             {
-                return Ok(singleMovieDetails); // Return the movie details
+                return Ok(singleMovieDetails); 
             }
 
-            return NotFound("Movie details not found."); // In case deserialization fails
+            return NotFound("Movie details not found."); 
         }
 
         return StatusCode((int)response.StatusCode, $"Error fetching movie details: {response.ReasonPhrase}");

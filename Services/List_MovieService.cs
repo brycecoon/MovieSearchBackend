@@ -28,6 +28,14 @@ public class List_MovieService : IList_MovieService
         }
     }
 
+    public async Task<List<ListMovie>> GetListMoviesByListIdAsync(int id)
+    {
+        return await _context.ListMovies
+            .Where(lm => lm.ListId == id)
+            .ToListAsync();
+    }
+
+
     public async Task<List<ListMovie>> GetList_MovieListAsync()
     {
         return await _context.ListMovies.ToListAsync();
