@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MovieSearchBackend.Data;
+using MovieSearchBackend.Data.DTOs;
 using MovieSearchBackend.Data.Interfaces;
 
 namespace MovieSearchBackend.Services;
@@ -33,9 +34,14 @@ public class ListService : IListService
         return await _context.Lists.ToListAsync();
     }
 
-    public async Task UpdateListAsync(List list)
+    public async Task UpdateListAsync(EditListDTO list)
     {
-        _context.Lists.Update(list);
+        var newList = new List();
+        newList.Id = list.id;
+        newList.UserId = list.userId;
+        newList.Name = list.name;
+
+        _context.Lists.Update(newList);
         await _context.SaveChangesAsync();
     }
 }

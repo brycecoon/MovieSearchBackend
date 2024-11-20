@@ -35,7 +35,7 @@ public class ListController : Controller
     }
 
     [HttpPut]
-    public async Task UpdateListAsync(List list)
+    public async Task UpdateListAsync(EditListDTO list)
     {
         await _ListService.UpdateListAsync(list);
     }

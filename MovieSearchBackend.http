@@ -1,4 +1,4 @@
-@MovieSearchBackend_HostAddress = http://localhost:5152
+@MovieSearchBackend_HostAddress = https://localhost:7162
 
 ###
 
@@ -28,5 +28,27 @@ Content-Type: application/json
 ###
 
 GET {{MovieSearchBackend_HostAddress}}/api/role/getAll
+
+###
+
+GET {{MovieSearchBackend_HostAddress}}/api/listmovie/getAll
+
+###
+
+GET {{MovieSearchBackend_HostAddress}}/api/list/getAll
+
+###
+
+PUT {{MovieSearchBackend_HostAddress}}/api/list
+Content-Type: application/json
+
+
+  {
+    "id": 7,
+    "name": "Favoritessss",
+    "userId": 18,
+    "listMovies": [],
+    "user": null
+  }
 
 ###
