@@ -111,33 +111,33 @@ public class MovieAPIController : ControllerBase
         else { return null; }
     }
 
-    [HttpGet("getSingleMovieDetails")]
-    public async Task<ActionResult<SingleMovieDetails>> GetSingleMovieDetails(int movieId)
-    {
-        var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/{movieId}?api_key={_apiKey}");
+    //[HttpGet("getSingleMovieDetails")]
+    //public async Task<ActionResult<SingleMovieDetails>> GetSingleMovieDetails(int movieId)
+    //{
+    //    var response = await _httpClient.GetAsync($"{apiBaseURL}/movie/{movieId}?api_key={_apiKey}");
 
-        if (response.IsSuccessStatusCode)
-        {
-            using var contentStream = await response.Content.ReadAsStreamAsync();
+    //    if (response.IsSuccessStatusCode)
+    //    {
+    //        using var contentStream = await response.Content.ReadAsStreamAsync();
 
-            var options = new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            };
+    //        var options = new JsonSerializerOptions
+    //        {
+    //            PropertyNameCaseInsensitive = true,
+    //            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+    //        };
 
-            var singleMovieDetails = await JsonSerializer.DeserializeAsync<SingleMovieDetails>(contentStream, options);
+    //        var singleMovieDetails = await JsonSerializer.DeserializeAsync<SingleMovieDetails>(contentStream, options);
 
-            if (singleMovieDetails != null)
-            {
-                return Ok(singleMovieDetails); 
-            }
+    //        if (singleMovieDetails != null)
+    //        {
+    //            return Ok(singleMovieDetails); 
+    //        }
 
-            return NotFound("Movie details not found."); 
-        }
+    //        return NotFound("Movie details not found."); 
+    //    }
 
-        return StatusCode((int)response.StatusCode, $"Error fetching movie details: {response.ReasonPhrase}");
-    }
+    //    return StatusCode((int)response.StatusCode, $"Error fetching movie details: {response.ReasonPhrase}");
+    //}
 
 
     [HttpGet("generateGenres")]

@@ -14,4 +14,10 @@ public class GenreResponse
     public List<Genre>? Genres { get; set; }
 }
 
+public class PersonResponse
+{
+    [JsonPropertyName("results")]
+    public List<ActorDetails>? Actors { get; set; }
+}
+
 
