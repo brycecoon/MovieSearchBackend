@@ -46,7 +46,7 @@ public class ListController : Controller
         var list =  await _ListMovieService.GetListMoviesByListIdAsync(id);
         foreach (var listItem in list)
         {
-            await _ListMovieService.DeleteFromListAsync(listItem.Id);
+            await _ListMovieService.DeleteFromListAsync(listItem.ListId, listItem.MovieId);
         }
 
         await _ListService.DeleteListAsync(id);

@@ -14,10 +14,10 @@ public class ListMovieController : Controller
         _ListMovieService = service;
     }
 
-    [HttpGet("getAll")]
-    public async Task<List<ListMovie>> GetListMovieListAsync()
+    [HttpGet("getbyListId")]
+    public async Task<List<ListMovie>> GetListMovieListAsync(int listId)
     {
-        return await _ListMovieService.GetList_MovieListAsync();
+        return await _ListMovieService.GetListMoviesByListIdAsync(listId);
     }
 
     [HttpPost]
@@ -31,9 +31,9 @@ public class ListMovieController : Controller
         await _ListMovieService.AddToListAsync(newListMovie);
     }
 
-    [HttpDelete("{id}")]
-    public async Task DeleteListMovieAsync(int id)
+    [HttpDelete("delete")]
+    public async Task DeleteListMovieAsync(int listId, int movieId)
     {
-        await _ListMovieService.DeleteFromListAsync(id);
+        await _ListMovieService.DeleteFromListAsync(listId, movieId);
     }
 }

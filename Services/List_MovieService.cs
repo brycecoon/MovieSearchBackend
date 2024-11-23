@@ -18,9 +18,9 @@ public class List_MovieService : IList_MovieService
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteFromListAsync(int id)
+    public async Task DeleteFromListAsync(int listId, int movieId)
     {
-        ListMovie listMovieToRemove = await _context.ListMovies.Where(l => l.Id == id).FirstOrDefaultAsync();
+        ListMovie listMovieToRemove = await _context.ListMovies.Where(l => l.ListId == listId && l.MovieId == movieId).FirstOrDefaultAsync();
         if (listMovieToRemove != null)
         {
             _context.ListMovies.Remove(listMovieToRemove);
@@ -33,11 +33,5 @@ public class List_MovieService : IList_MovieService
         return await _context.ListMovies
             .Where(lm => lm.ListId == id)
             .ToListAsync();
-    }
-
-
-    public async Task<List<ListMovie>> GetList_MovieListAsync()
-    {
-        return await _context.ListMovies.ToListAsync();
     }
 }
