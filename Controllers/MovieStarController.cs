@@ -34,10 +34,27 @@ public class MovieStarController : ControllerBase
                 await response.Content.ReadAsStreamAsync();
 
             var actorResponse = await JsonSerializer.DeserializeAsync
-                <PersonResponse>(contentStream);
+                <PeopleResponse>(contentStream);
 
             return actorResponse?.Actors.ToArray();
         }
         else { return null; }
+    }
+
+    [HttpGet("getById")]
+    public async Task<SinglePersonDetails?> GetPersonById(int actorId)
+    {
+        var response = await _httpClient.GetAsync($"{apiBaseURL}/person/{actorId}?api_key={_apiKey}&language=en-US");
+        if (response.IsSuccessStatusCode)
+        {
+            using var contentStream = await response.Content.ReadAsStreamAsync();
+
+            var actorResponse = await JsonSerializer.DeserializeAsync<SinglePersonDetails>(contentStream);
+            return actorResponse;
+        }
+        else
+        {
+            return null;
+        }
     }
 }

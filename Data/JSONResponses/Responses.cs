@@ -14,10 +14,12 @@ public class GenreResponse
     public List<Genre>? Genres { get; set; }
 }
 
-public class PersonResponse
+public class PeopleResponse
 {
     [JsonPropertyName("results")]
     public List<ActorDetails>? Actors { get; set; }
 }
+
+
 
 
