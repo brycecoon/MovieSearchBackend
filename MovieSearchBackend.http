@@ -60,3 +60,15 @@ GET {{MovieSearchBackend_HostAddress}}/api/moviestar/getById?actorId=129700
 GET {{MovieSearchBackend_HostAddress}}/api/movieapi/getTrendingMovies
 
 ###
+
+GET {{MovieSearchBackend_HostAddress}}/api/list/getAll
+
+###
+
+GET {{MovieSearchBackend_HostAddress}}/api/listmovie/getbyListId?listId=7
+
+###
+
+DELETE {{MovieSearchBackend_HostAddress}}/api/listmovie/delete?listId=7&movieId=912649
+
+
