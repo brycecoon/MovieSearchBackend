@@ -22,7 +22,7 @@ spec:
       - name: movie-search-backend
         image: brycecoon/msearchbackend:${IMAGE_TAG}
         env:
-          - name: db
+          - name: DB
             value: "${DB}"
         env:
           - name: APIKEY
