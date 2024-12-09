@@ -24,7 +24,6 @@ spec:
         env:
           - name: DB
             value: "${DB}"
-        env:
           - name: APIKEY
             value: "${APIKEY}"
         ports:
