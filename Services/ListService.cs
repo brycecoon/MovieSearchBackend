@@ -29,9 +29,9 @@ public class ListService : IListService
         }
     }
 
-    public async Task<List<List>> GetAllListsAsync()
+    public async Task<List<List>> GetAllListsAsync(int userId)
     {
-        return await _context.Lists.ToListAsync();
+        return await _context.Lists.Where(l => l.UserId == userId).ToListAsync();
     }
 
     public async Task UpdateListAsync(EditListDTO list)

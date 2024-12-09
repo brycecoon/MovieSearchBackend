@@ -17,10 +17,10 @@ public class ListController : Controller
         _ListMovieService = listMovieService;   
     }
 
-    [HttpGet("getAll")]
-    public async Task<List<List>> GetListListAsync()
+    [HttpGet("getAll/{userId}")]
+    public async Task<List<List>> GetListListAsync(int userId)
     {
-        return await _ListService.GetAllListsAsync();
+        return await _ListService.GetAllListsAsync(userId);
     }
 
     [HttpPost]
